@@ -1,3 +1,4 @@
+
 class criatura
 {
 private:
@@ -13,10 +14,14 @@ private:
     int tam;
 
 public:
+    int pop;
+    byte temp;
     criatura(/* args */);
     void GenerarCriatura(byte *matriz_pantalla);
     void Movimientos();
     void CambioOrientacion(int Orientacion);
+    void Choques();
+    void ComioObjetivo(comida &COMIDA);
     bool Velocidad();
     ~criatura();
 };
@@ -46,15 +51,22 @@ void criatura::GenerarCriatura(byte *matriz_pantalla)
     }
 }
 
+void criatura::Choques()
+{
+    if (memcmp(this->cuerpo[0], 0b00000000, 8) == 0)
+    {
+        Serial.println("GAMER OVER");
+    }
+    else if (this->posiciones[0] == 16 || this->posiciones[0] == -1)
+    {
+        Serial.println("GAMER OVER");
+    }
+}
+
 void criatura::Movimientos()
 {
-    
-    int pop;
-    byte temp;
     if (this->MovimientoX)
     {
-        Serial.println(this->EjeX);
-        Serial.println("------");
         pop = this->posiciones[0];
         temp = this->cuerpo[0];
         this->posiciones[0] = this->posiciones[0] + EjeX;
@@ -81,6 +93,8 @@ void criatura::Movimientos()
         temp1 = this->cuerpo[i];
         this->posiciones[i] = pop;
         this->cuerpo[i] = temp;
+        pop = posicion;
+        temp = temp1;
     }
     this->t_ultimo_x = millis();
 }
@@ -119,5 +133,21 @@ void criatura::CambioOrientacion(int Orientacion)
 
 bool criatura::Velocidad()
 {
-    return (millis() - this->t_ultimo_x) > 1000;
+    return (millis() - this->t_ultimo_x) > 250;
+}
+
+void criatura::ComioObjetivo(comida &COMIDA)
+{
+    if (this->posiciones[0] == COMIDA.x)
+    {
+        if (memcmp(this->cuerpo[0], COMIDA.objetivo, 8) == 0)
+        {
+
+            this->posiciones[tam] = pop;
+            this->cuerpo[tam] = temp;
+            tam++;
+            COMIDA.NuevaPosicion(this->posiciones, this->cuerpo, tam);
+            Serial.println("Comio Objetivos");
+        }
+    }
 }

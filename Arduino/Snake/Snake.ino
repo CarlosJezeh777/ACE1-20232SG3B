@@ -1,11 +1,14 @@
 #include "LedControl.h"
 #include "global/global.h"
 #include "funciones/matriz.h"
+#include "clases/comida.h"
 #include "clases/criatura.h"
 
+comida COMIDA;
 criatura SNAKE;
 
 #include "funciones/botones.h"
+
 
 void setup() {
   // put your setup code here, to run once:
@@ -33,10 +36,13 @@ void loop() {
   case JUEGO:
     limparMatriz();
     SNAKE.GenerarCriatura(matriz_pantalla);
+    COMIDA.ColocarComida(matriz_pantalla);
     if (SNAKE.Velocidad())
     {
       SNAKE.Movimientos();
+      SNAKE.ComioObjetivo(COMIDA);
     }
+    SNAKE.Choques();
     pintarMatriz();
     Botones_Juego();
     break;
