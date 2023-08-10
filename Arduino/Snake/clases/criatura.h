@@ -16,6 +16,8 @@ private:
 public:
     int pop;
     byte temp;
+    int aceleracion;
+    int puntaje;
     criatura(/* args */);
     void GenerarCriatura(byte *matriz_pantalla);
     void Movimientos();
@@ -37,6 +39,7 @@ criatura::criatura(/* args */)
     this->abajo = false;
     this->arriba = false;
     this->EjeX = 1;
+    this->aceleracion = 1024;
 }
 
 criatura::~criatura()
@@ -56,10 +59,22 @@ void criatura::Choques()
     if (memcmp(this->cuerpo[0], 0b00000000, 8) == 0)
     {
         Serial.println("GAMER OVER");
+        Serial.println(this->puntaje);
     }
     else if (this->posiciones[0] == 16 || this->posiciones[0] == -1)
     {
         Serial.println("GAMER OVER");
+        Serial.println(this->puntaje);
+    }else
+    {
+        for (size_t i = 1; i < tam; i++)
+        {
+            if (this->posiciones[0] == this->posiciones[i] && memcmp(this->cuerpo[0], this->cuerpo[i], 8) == 0)
+            {
+                Serial.println("GAMER OVER");
+                Serial.println(this->puntaje);
+            }
+        }
     }
 }
 
@@ -73,14 +88,12 @@ void criatura::Movimientos()
     }
     else if (this->arriba)
     {
-        Serial.println("Arriba");
         pop = this->posiciones[0];
         temp = this->cuerpo[0];
         this->cuerpo[0] = this->cuerpo[0] << 1;
     }
     else if (this->abajo)
     {
-        Serial.println("Abajo");
         pop = this->posiciones[0];
         temp = this->cuerpo[0];
         this->cuerpo[0] = this->cuerpo[0] >> 1;
@@ -133,7 +146,7 @@ void criatura::CambioOrientacion(int Orientacion)
 
 bool criatura::Velocidad()
 {
-    return (millis() - this->t_ultimo_x) > 250;
+    return (millis() - this->t_ultimo_x) > this->aceleracion;    
 }
 
 void criatura::ComioObjetivo(comida &COMIDA)
@@ -148,6 +161,12 @@ void criatura::ComioObjetivo(comida &COMIDA)
             tam++;
             COMIDA.NuevaPosicion(this->posiciones, this->cuerpo, tam);
             Serial.println("Comio Objetivos");
+            this->aceleracion = this->aceleracion - 64;
+            if (this->aceleracion < 0)
+            {
+                this->aceleracion = 128;
+            }
+            this->puntaje++;
         }
     }
 }
