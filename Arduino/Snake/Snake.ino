@@ -1,4 +1,5 @@
 #include "LedControl.h"
+#include "global/caracteres.h"
 #include "global/global.h"
 #include "funciones/matriz.h"
 #include "clases/comida.h"
@@ -8,6 +9,8 @@ comida COMIDA;
 criatura SNAKE;
 
 #include "funciones/botones.h"
+#include "funciones/pausa.h"
+#include "funciones/configuracion.h"
 
 
 void setup() {
@@ -26,26 +29,42 @@ void setup() {
   pinMode(BTN_ARRIBA, INPUT);
   pinMode(BTN_ABAJO,INPUT);
 
-  ESTADO = JUEGO;
+  ESTADO = CONFIG;
 }
 
 void loop() {
   // put your main code here, to run repeatedly:
   switch (ESTADO)
   {
+  case CONFIG:
+    limparMatriz();
+    ConfiguracionInicial(matriz_pantalla); 
+    pintarMatriz();
+    SNAKE.reset();
+    SNAKE.aceleracion = map(rangoV, 1, 4, 1024, 256);
+    SNAKE.veloz = map(rangoV, 1, 4, 128, 8);
+    Botones_Configuracion();
+    break;
   case JUEGO:
     limparMatriz();
     SNAKE.GenerarCriatura(matriz_pantalla);
     COMIDA.ColocarComida(matriz_pantalla);
-    if (SNAKE.Velocidad())
+    if (inicioJuego)
     {
-      SNAKE.Movimientos();
-      SNAKE.ComioObjetivo(COMIDA);
+      if (SNAKE.Velocidad())
+      {
+        SNAKE.Movimientos();
+        SNAKE.ComioObjetivo(COMIDA);
+      }
+      SNAKE.Choques();
     }
-    SNAKE.Choques();
     pintarMatriz();
     Botones_Juego();
     break;
+  case PAUSA:
+    MostrarPuntuacion(matriz_pantalla, SNAKE.puntaje);
+    pintarMatriz();
+    Botones_Pausa();
   default:
     break;
   }
