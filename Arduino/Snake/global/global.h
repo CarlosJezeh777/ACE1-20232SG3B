@@ -16,6 +16,7 @@ enum Estado {
     CONFIG,
     JUEGO,
     PAUSA,
+    GAMEOVER,
 };
 
 Estado ESTADO;

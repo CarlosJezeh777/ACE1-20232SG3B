@@ -34,8 +34,6 @@ void setup()
 
 void loop()
 {
-  // put your main code here, to run repeatedly:
-  switch (ESTADO)
   {
   case CONFIG:
     limparMatriz();
@@ -68,7 +66,7 @@ void loop()
   case PAUSA:
     MostrarPuntuacion(matriz_pantalla, SNAKE.puntaje);
     pintarMatriz();
-    Botones_Pausa()
+    Botones_Pausa();
   default:
     break;
   }
