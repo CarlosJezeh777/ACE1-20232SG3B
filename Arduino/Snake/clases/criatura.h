@@ -71,21 +71,29 @@ void criatura::Choques()
 {
     if (memcmp(this->cuerpo[0], 0b00000000, 8) == 0)
     {
-        Serial.println("GAMER OVER");
+        Serial.println("prueba");
         Serial.println(this->puntaje);
+        ESTADO = GAMEOVER;
+        Serial.println(ESTADO);
     }
     else if (this->posiciones[0] == 16 || this->posiciones[0] == -1)
     {
-        Serial.println("GAMER OVER");
+        Serial.println("prueba");
         Serial.println(this->puntaje);
-    }else
+        ESTADO = GAMEOVER;
+        Serial.println(ESTADO);
+    }
+    else
     {
         for (size_t i = 1; i < tam; i++)
         {
             if (this->posiciones[0] == this->posiciones[i] && memcmp(this->cuerpo[0], this->cuerpo[i], 8) == 0)
             {
-                Serial.println("GAMER OVER");
+                Serial.println("prueba");
                 Serial.println(this->puntaje);
+                ESTADO = GAMEOVER;
+                Serial.println(ESTADO);
+                break;
             }
         }
     }
@@ -159,7 +167,7 @@ void criatura::CambioOrientacion(int Orientacion)
 
 bool criatura::Velocidad()
 {
-    return (millis() - this->t_ultimo_x) > this->aceleracion;    
+    return (millis() - this->t_ultimo_x) > this->aceleracion;
 }
 
 void criatura::ComioObjetivo(comida &COMIDA)
