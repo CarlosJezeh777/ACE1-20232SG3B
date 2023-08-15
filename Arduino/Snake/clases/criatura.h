@@ -18,6 +18,7 @@ public:
     byte temp;
     int aceleracion;
     int puntaje;
+    int veloz;
     criatura(/* args */);
     void GenerarCriatura(byte *matriz_pantalla);
     void Movimientos();
@@ -25,21 +26,33 @@ public:
     void Choques();
     void ComioObjetivo(comida &COMIDA);
     bool Velocidad();
+    void reset();
     ~criatura();
 };
 
 criatura::criatura(/* args */)
 {
     this->tam = 2;
-    this->posiciones[0] = 6;
-    this->posiciones[1] = 5;
+    this->posiciones[0] = 0;
+    this->posiciones[1] = 0;
     this->cuerpo[0] = 0b00001000;
-    this->cuerpo[1] = 0b00001000;
-    this->MovimientoX = true;
+    this->cuerpo[1] = 0b00000100;
+    this->MovimientoX = false;
     this->abajo = false;
-    this->arriba = false;
+    this->arriba = true;
     this->EjeX = 1;
-    this->aceleracion = 1024;
+}
+
+void criatura::reset(){
+    this->tam = 2;
+    this->posiciones[0] = 0;
+    this->posiciones[1] = 0;
+    this->cuerpo[0] = 0b00001000;
+    this->cuerpo[1] = 0b00000100;
+    this->MovimientoX = false;
+    this->abajo = false;
+    this->arriba = true;
+    this->EjeX = 1;
 }
 
 criatura::~criatura()
@@ -169,10 +182,10 @@ void criatura::ComioObjetivo(comida &COMIDA)
             tam++;
             COMIDA.NuevaPosicion(this->posiciones, this->cuerpo, tam);
             Serial.println("Comio Objetivos");
-            this->aceleracion = this->aceleracion - 64;
-            if (this->aceleracion < 0)
+            this->aceleracion = this->aceleracion - this->veloz;
+            if (this->aceleracion <= 512)
             {
-                this->aceleracion = 128;
+                this->veloz = 32;
             }
             this->puntaje++;
         }

@@ -3,16 +3,19 @@ byte matriz_limpia[16] = {};
 
 int BTN_IZQ = 22;
 int BTN_ARRIBA = 23;
-int BTN_DER = 24;
-int BTN_ABAJO = 25;
+int BTN_DER  = 24;
+int BTN_ABAJO  = 25;
+int BTN_INICIO = 26;
 
 LedControl matriz_driver = LedControl(51, 52, 53, 2);
 bool puede_leer_btn = true; // Bandera auxiliar que sirve para leer correctamente los botones
-
-enum Estado
-{
-  JUEGO,
-  GAMEOVER,
+int tiempo_boton_ini = 0;
+bool inicioJuego;
+int rangoV = 1;
+enum Estado {
+    CONFIG,
+    JUEGO,
+    PAUSA,
 };
 
 Estado ESTADO;
@@ -133,3 +136,41 @@ Estado ESTADO;
 byte frase[9][9] = {G, A, M, E, SP, O, V, E, R};
 int largo = sizeof(frase) / 9;
 int gnd[18] = {-5, -4, -3, -2, -1, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12};
+void buscarNumero(int nivel, byte *numero)
+{
+    switch (nivel)
+    {
+    case 1:
+        memcpy(numero, UNO, 8);
+        break;
+    case 2:
+        memcpy(numero, DOS, 8);
+        break;
+    case 3:
+        memcpy(numero, TRES, 8);
+        break;
+    case 4:
+        memcpy(numero, CUATRO, 8);
+        break;
+    case 5:
+        memcpy(numero, CINCO, 8);
+        break;
+    case 6:
+        memcpy(numero, SEIS, 8);
+        break;
+    case 7:
+        memcpy(numero, SIETE, 8);
+        break;
+    case 8:
+        memcpy(numero, OCHO, 8);
+        break;
+    case 9:
+        memcpy(numero, NUEVE, 8);
+        break;
+    case 0:
+        memcpy(numero, CERO, 8);
+        break;
+    default:
+        break;
+    }
+}
