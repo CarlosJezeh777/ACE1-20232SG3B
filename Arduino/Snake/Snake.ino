@@ -57,20 +57,51 @@ void loop()
 
 void mostrar()
 {
+
   for (int letra = 0; letra < largo; letra++)
   {
-    for (int desplaza = 20; desplaza >= 5; desplaza--)
+
+    for (int desplaza = 16; desplaza >= 0; desplaza--)
     {
+      Serial.println(desplaza);
+
       for (int i = 0; i < 5; i++)
       {
-        matriz_driver.setRow(0, gnd[i + desplaza - 5], frase[letra][i]);
+        if (desplaza >= 0) // Cambiado < 8 a < 16
+        {
+          matriz_driver.setColumn(0, gnd[i + desplaza], frase[letra][i]);
+        }
+
+        if (desplaza >= 8) // Cambiado >= 8 a >= 16
+        {
+          matriz_driver.setColumn(1, gnd[i + desplaza - 8], frase[letra][i]);
+        }
       }
-      delay(100); // speed of animation
+
+      delay(50); // Velocidad de la animación
       matriz_driver.clearDisplay(0);
+      matriz_driver.clearDisplay(1);
     }
     if (letra == largo)
     {
-      letra = 0;
+      ESTADO = JUEGO;
     }
-  } // end for letra
+  }
+
+  for (int desplaza = 16; desplaza >= 0; desplaza--)
+  {
+    if (desplaza >= 0)
+    {
+      int variablePos = desplaza + 2;                               // Ajusta la posición vertical de la variable
+      matriz_driver.setColumn(0, variablePos, SNAKE.puntaje); // Enciende el LED para mostrar la variable
+    }
+    if (desplaza >= 8)
+    {
+      int variablePos = desplaza + 2;                               // Ajusta la posición vertical de la variable
+      matriz_driver.setColumn(1, variablePos, SNAKE.puntaje); // Enciende el LED para mostrar la variable
+    }
+    delay(50); // Velocidad de la animación
+      matriz_driver.clearDisplay(0);
+      matriz_driver.clearDisplay(1);
+  }
 }
