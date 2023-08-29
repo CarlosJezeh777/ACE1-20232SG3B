@@ -1,7 +1,6 @@
-#include "Wire.h"
-
-void ConexionPeticionEsclavo(){
-    Wire.requestFrom(0x01,1);
+void ConexionPeticionEsclavo()
+{
+    Wire.requestFrom(0x01, 1);
     while (Wire.available())
     {
         CODE = Wire.read();
@@ -10,7 +9,15 @@ void ConexionPeticionEsclavo(){
     if (CODE == 1)
     {
         ESTADO = JUEGO;
-    }   
+    }
+}
+void ConexionResiceEsclavo(byte pin)
+{
+    Wire.beginTransmission(1);
+    Wire.write(pin);
+    ConexionPeticionEsclavo();
+    Wire.endTransmission();
+    delay(1000);
 }
 
 void ConexionPeticionEsclavo2()
@@ -24,15 +31,10 @@ void ConexionPeticionEsclavo2()
     {
         puntos = cantidad + puntos;
         subpuntos++;
-    }else if (CODE == 2){
+        ConexionResiceEsclavo(2);
+    }
+    else if (CODE == 2)
+    {
         vidas--;
     }
-}
-
-void ConexionResiceEsclavo(byte pin){
-    Wire.beginTransmission(1);
-    Wire.write(pin);
-    ConexionPeticionEsclavo();
-        Wire.endTransmission();
-    delay(1000);
 }

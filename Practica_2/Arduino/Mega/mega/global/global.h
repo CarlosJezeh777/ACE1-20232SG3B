@@ -49,5 +49,23 @@ int cantidad =10;
 int subpuntos;
 int nivel;
 int vidas = 3 ;
-int listapuntos[20];
+int listapuntos[10] = {0,0,0,0,0,0,0,0};
 int popP = 0;
+String nombreLugares[10] = {"Primero","Segundo","Tercero","Cuarto","Quinto","Sexto","Septimo","Noveno","Decimo"};
+
+void bubbleSort(int arr[], int n)
+{
+    for (int i = 0; i < n - 1; i++)
+    {
+        for (int j = 0; j < n - i - 1; j++)
+        {
+            if (arr[j] > arr[j + 1])
+            {
+                // Intercambiar elementos si están en el orden incorrecto
+                int temp = arr[j];
+                arr[j] = arr[j + 1];
+                arr[j + 1] = temp;
+            }
+        }
+    }
+}
