@@ -9,12 +9,10 @@ Servo myServoDer;
 
 bool puede_leer_btn;
 
-int trigPin = 22;
-int echoPin = 24;
-int pingTime;
+
 bool OPCIONES = true;
 
-String Dato[] = {"Luis Josue Choc", "Juan", "Hola", "Mundo"};
+String Dato[] = {"Luis Josue Choc", "Richard Alexandro", "Carlos Jezeh Toscano", "Pedro Luis Pu"};
 
 enum Estado
 {
@@ -22,6 +20,7 @@ enum Estado
     MENU_JUEGO,
     JUEGO,
     PUNTAJES,
+    INICIANDO,
 };
 
 Estado ESTADO;
@@ -43,3 +42,12 @@ void imprimirLCD(int texto, int fila, int columna)
 }
 
 //Menu juego
+
+byte CODE;
+int puntos;
+int cantidad =10;
+int subpuntos;
+int nivel;
+int vidas = 3 ;
+int listapuntos[20];
+int popP = 0;

@@ -41,8 +41,16 @@ void Botones_Menu()
     {
         OPCIONES = !OPCIONES;
         Serial.println(OPCIONES);
-    }else if (digitalRead(BTN_DER) == LOW && puede_leer_btn)
+    }
+    else if (digitalRead(BTN_DER) == LOW && puede_leer_btn)
     {
-        Serial.println("D");
+        if (OPCIONES)
+        {
+            ESTADO = INICIANDO;
+            lcd.clear();
+        }else if (OPCIONES == false)
+        {
+            ESTADO = PUNTAJES;
+        }
     }
 }

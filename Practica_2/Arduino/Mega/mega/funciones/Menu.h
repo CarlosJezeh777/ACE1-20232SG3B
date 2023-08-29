@@ -13,7 +13,7 @@ void Mensaje_Inicial()
 
 void MenuJuego()
 {
-    if (OPCIONES)
+    if (OPCIONES == true)
     {
         imprimirLCD("> Nuevo Juego", 0, 0);
         imprimirLCD("  Puntajes Alto", 1, 0);
