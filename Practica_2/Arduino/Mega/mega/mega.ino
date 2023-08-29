@@ -66,6 +66,7 @@ void loop()
       cantidad = cantidad + 10;
       subpuntos = 0;
     }
+    Botones_Juegos();
   case PUNTAJES:
     int n = sizeof(listapuntos) / sizeof(listapuntos[0]);
     bubbleSort(listapuntos, n);
