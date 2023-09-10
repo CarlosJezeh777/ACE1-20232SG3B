@@ -30,10 +30,27 @@ void imprimirLCD(int texto, int fila, int columna)
     lcd.print(texto);
 }
 
+//Teclado
+
+const byte ROWS = 4;
+const byte COLS = 3;
+char keys[ROWS][COLS] = {
+    {'1', '2', '3'},
+    {'4', '5', '6'},
+    {'7', '8', '9'},
+    {'*', '0', '#'}};
+byte rowPins[ROWS] = {5, 4, 3, 2};
+byte colPins[COLS] = {6, 8, 7};
+
+Keypad Key = Keypad(makeKeymap(keys), rowPins, colPins, ROWS, COLS);
+
+//usuarios
 struct Usuario
 {
-    char nombre[20]; // 16 caracteres + 1 caracter de fin de cadena
-    char contrasena[10];
+    char nombre[10]; 
+    char password[10];
 };
 
-const Usuario ADMIN = {"B0313D", "034123"}; // Usuario administrador
+const Usuario USR_ADMIN = {"B0313D", "034123"}; // Usuario administrador
+
+uint8_t USUARIOS_REGISTRADOS = 0;

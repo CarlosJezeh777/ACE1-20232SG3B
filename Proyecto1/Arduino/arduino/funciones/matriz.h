@@ -21,5 +21,5 @@ void pintarMatrizEstaciones()
 void limparEstaciones()
 {
     // Compia a la matriz estado el contenido de la matriz limpia (que son solo 0's) para limpiar la matriz, es decir, dejar todas las posiciones en 0's de la matriz_estado
-    memcpy(matriz_pantalla, matriz_limpia, 24);
+    memcpy(matriz_estaciones, matriz_limpia, 24);
 }

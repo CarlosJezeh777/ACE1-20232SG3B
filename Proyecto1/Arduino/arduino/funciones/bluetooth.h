@@ -1,4 +1,4 @@
-void ComunicacionBluetooth(string cadenaRecibida){
+void ComunicacionBluetooth(String cadenaRecibida){
     char caracter;
     while (Serial.available() > 0)
     {
@@ -8,6 +8,7 @@ void ComunicacionBluetooth(string cadenaRecibida){
 }
 
 void LlenarMatrizBluetooth(){
+    int i =0;
     while (Serial.available() >0)
     {
         matriz_estacion[i] = Serial.read();
