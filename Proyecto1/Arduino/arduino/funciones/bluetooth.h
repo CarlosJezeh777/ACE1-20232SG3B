@@ -1,4 +1,4 @@
-void ComunicacionBluetooth(string cadenaRecibida){
+void ComunicacionBluetooth(String cadenaRecibida){
     char caracter;
     while (Serial.available() > 0)
     {
